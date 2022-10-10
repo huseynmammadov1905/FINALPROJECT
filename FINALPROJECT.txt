@@ -1,0 +1,1398 @@
+
+
+
+
+#include <iostream>
+#include <windows.h>
+#include<conio.h>
+
+using namespace std;
+
+
+
+void changeColor(int y) {
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, y);
+}
+
+enum color
+{
+
+	Blue = 1,
+	Red = 4,
+	White = 7,
+	Green = 10,
+	Blue2 = 11,
+	Yellow = 100
+};
+char arr[10][10];
+char arr1[10][10];
+char arr3[10][10];
+
+char X = 88;
+char O = 79;
+
+int usership = 14;
+int botship = 14;
+int x;
+int y;
+int h;
+int s = 0;
+
+
+char a1;
+
+
+
+int setir_num[10]{ 0,1,2,3,4,5,6,7,8,9 };
+char sutun_num[10]{ 'A','B','C','D','E','F','G','H','I','J' };
+
+char num = 249;
+char boat = 30;
+
+int setir = 10;
+int sutun = 10;
+
+bool detect_ship(char arr[10][10], int x, int y, int sh, int h) {
+
+	int i = 1;
+	if (arr[x][y] != boat) {
+		if (h == 1) {
+			switch (sh)
+			{
+			case 1:
+
+				if (x == 0 && y == 0) {
+					if (arr[x][y] == boat || arr[x + 1][y] == boat || arr[x][y + 1] == boat || arr[x + 1][y + 1] == boat) {
+						return false;
+					}
+				}
+				else if (x == 0 && y == 9) {
+					if (arr[x][y] == boat || arr[x + 1][y] == boat || arr[x][y - 1] == boat || arr[x + 1][y - 1] == boat) {
+						return false;
+					}
+				}
+				else if (x == 9 && y == 0) {
+					if (arr[x][y] == boat || arr[x - 1][y] == boat || arr[x][y + 1] == boat || arr[x - 1][y + 1] == boat) {
+						return false;
+					}
+				}
+				else if (x == 9 && y == 9) {
+					if (arr[x][y] == boat || arr[x][y - 1] == boat || arr[x - 1][y] == boat || arr[x - 1][y - 1] == boat) {
+						return false;
+					}
+				}
+				else if (x == 9 && y < 9 && y >0) {
+					if (arr[x - 1][y] == boat || arr[x][y - 1] == boat || arr[x][y + 1] == boat || arr[x - 1][y - 1] == boat || arr[x - 1][y + 1] == boat) {
+						return false;
+					}
+
+				}
+				else if (x == 0 && y > 0 && y < 9) {
+					if (arr[x + 1][y] == boat || arr[x][y - 1] == boat || arr[x][y + 1] == boat || arr[x + 1][y - 1] == boat || arr[x + 1][y + 1] == boat) {
+						return false;
+					}
+				}
+				else if (x > 0 && x < 9 && y == 0) {
+					if (arr[x - 1][y] == boat || arr[x - 1][y + 1] == boat || arr[x][y + 1] == boat || arr[x + 1][y + 1] == boat || arr[x + 1][y] == boat) {
+						return false;
+					}
+				}
+				else if (x > 0 && x < 9 && y == 9) {
+					if (arr[x - 1][y] == boat || arr[x - 1][y - 1] == boat || arr[x][y - 1] == boat || arr[x + 1][y - 1] == boat || arr[x + 1][y] == boat) {
+						return false;
+					}
+				}
+				else if (x < 9 && x >0 && y > 0 && y < 9) {
+					if (arr[x][y + 1] == boat || arr[x][y - 1] == boat || arr[x + 1][y] == boat || arr[x - 1][y] == boat || arr[x + 1][y + 1] == boat || arr[x - 1][y - 1] == boat || arr[x + 1][y - 1] == boat || arr[x - 1][y + 1] == boat) {
+						return false;
+					}
+				}
+
+				break;
+
+			case 2:
+			case 3:
+			case 4:
+				for (; i < sh; i++)
+				{
+					if (x + (sh - 1) > 9) {
+						return false;
+					}
+					else if (x + (sh - 1) < 9 && x > 0 && y == 0) {
+						if (arr[x - 1][y] == boat || arr[x - 1][y + 1] == boat || arr[x][y + 1] == boat || arr[x + i][y + 1] == boat || arr[x + i][y] == boat || arr[x + (sh - 1) + 1][y] == boat || arr[x + (sh - 1) + 1][y + 1] == boat) {
+							return false;
+						}
+					}
+					else if (x + (sh - 1) < 9 && x > 0 && y == 9) {
+						if (arr[x - 1][y] == boat || arr[x - 1][y - 1] == boat || arr[x][y - 1] == boat || arr[x + i][y - 1] == boat || arr[x + i][y] == boat || arr[x + (sh - 1) + 1][y] == boat || arr[x + (sh - 1) + 1][y - 1] == boat) {
+							return false;
+						}
+					}
+					else if (x + (sh - 1) == 9 && y == 9) {
+						if (arr[x - 1][y] == boat || arr[x - 1][y - 1] == boat || arr[x][y - 1] == boat || arr[x + i][y - 1] == boat || arr[x + i][y] == boat) {
+							return false;
+						}
+
+					}
+					else if (x == 0 && y == 9) {
+						if (arr[x][y - 1] == boat || arr[x + i][y] == boat || arr[x + i][y - 1] == boat || arr[x + (sh - 1) + 1][y - 1] == boat || arr[x + (sh - 1) + 1][y] == boat) {
+							return false;
+						}
+					}
+					else if (x + (sh - 1) < 9 && y == 9) {
+						if (arr[x - 1][y] == boat || arr[x - 1][y - 1] == boat || arr[x][y - 1] == boat || arr[x + i][y - 1] == boat || arr[x + i][y] == boat || arr[x + (sh - 1) + 1][y] == boat || arr[x + (sh - 1) + 1][y - 1] == boat) {
+							return false;
+						}
+					}
+					else if (x == 0 && y == 0) {
+						if (arr[x][y + 1] == boat || arr[x + i][y + 1] == boat || arr[x + (sh - 1) + 1][y + 1] == boat || arr[x + i][y] == boat || arr[x + (sh - 1) + 1][y] == boat) {
+							return false;
+						}
+					}
+					else if (x + (sh - 1) == 9 && y == 0) {
+						if (arr[x - 1][y] == boat || arr[x - 1][y + 1] == boat || arr[x][y + 1] == boat || arr[x + i][y + 1] == boat || arr[x + i][y] == boat) {
+							return false;
+						}
+					}
+					else if (x + (sh - 1) == 9 && y < 9 && y > 0) {
+						if (arr[x - 1][y] == boat || arr[x - 1][y + 1] == boat || arr[x - 1][y - 1] == boat || arr[x][y + 1] == boat || arr[x][y - 1] == boat || arr[x + i][y + 1] == boat || arr[x + i][y - 1] == boat || arr[x + i][y] == boat) {
+							return false;
+						}
+					}
+					else if (x == 0 && y < 9 && y > 0) {
+						if (arr[x][y + 1] == boat || arr[x][y - 1] == boat || arr[x + i][y] == boat || arr[x + i][y + 1] == boat || arr[x + i][y - 1] == boat || arr[x + (sh - 1) + 1][y] == boat || arr[x + (sh - 1) + 1][y - 1] == boat || arr[x + (sh - 1) + 1][y + 1] == boat) {
+							return false;
+						}
+					}
+
+					else if (x > 0 && x + (sh - 1) < 9 && y < 9 && y >0) {
+						if (arr[x][y + 1] == boat || arr[x][y - 1] == boat || arr[x - 1][y] == boat || arr[x - 1][y + 1] == boat || arr[x - 1][y - 1] == boat || arr[x + i][y] == boat || arr[x + i][y + 1] == boat || arr[x + i][y - 1] == boat || arr[x + (sh - 1) + 1][y] == boat || arr[x + (sh - 1) + 1][y - 1] == boat || arr[x + (sh - 1) + 1][y + 1] == boat) {
+							return false;
+						}
+					}
+				}
+				break;
+
+			}
+		}
+		else if (h == 2) {
+			switch (sh)
+			{
+			case 1:	if (x == 0 && y == 0) {
+				if (arr[x][y] == boat || arr[x + 1][y] == boat || arr[x][y + 1] == boat || arr[x + 1][y + 1] == boat) {
+					return false;
+				}
+			}
+				  else if (x == 0 && y == 9) {
+				if (arr[x][y] == boat || arr[x + 1][y] == boat || arr[x][y - 1] == boat || arr[x + 1][y - 1] == boat) {
+					return false;
+				}
+			}
+				  else if (x == 9 && y == 0) {
+				if (arr[x][y] == boat || arr[x - 1][y] == boat || arr[x][y + 1] == boat || arr[x - 1][y + 1] == boat) {
+					return false;
+				}
+			}
+				  else if (x == 9 && y == 9) {
+				if (arr[x][y] == boat || arr[x][y - 1] == boat || arr[x - 1][y] == boat || arr[x - 1][y - 1] == boat) {
+					return false;
+				}
+			}
+				  else if (y == 0 && x < 9 && x > 0) {
+				if (arr[x - 1][y] == boat || arr[x + 1][y] == boat || arr[x - 1][y + 1] == boat || arr[x + 1][y + 1] == boat || arr[x][y + 1] == boat) {
+					return false;
+				}
+
+			}
+				  else if (y == 9 && x > 0 && x < 9) {
+				if (arr[x + 1][y] == boat || arr[x - 1][y] == boat || arr[x][y - 1] == boat || arr[x + 1][y - 1] == boat || arr[x - 1][y - 1] == boat) {
+					return false;
+				}
+			}
+				  else if (y > 0 && y < 9 && x == 0) {
+				if (arr[x][y - 1] == boat || arr[x + 1][y - 1] == boat || arr[x + 1][y] == boat || arr[x + 1][y + 1] == boat || arr[x][y + 1] == boat) {
+					return false;
+				}
+			}
+				  else if (y > 0 && y < 9 && x == 9) {
+				if (arr[x][y - 1] == boat || arr[x - 1][y - 1] == boat || arr[x - 1][y] == boat || arr[x - 1][y + 1] == boat || arr[x][y + 1] == boat) {
+					return false;
+				}
+			}
+				  else if (x < 9 && x >0 && y > 0 && y < 9) {
+				if (arr[x][y + 1] == boat || arr[x][y - 1] == boat || arr[x + 1][y] == boat || arr[x - 1][y] == boat || arr[x + 1][y + 1] == boat || arr[x - 1][y - 1] == boat || arr[x + 1][y - 1] == boat || arr[x - 1][y + 1] == boat) {
+					return false;
+				}
+			}
+
+				  break;
+
+			case 2:
+			case 3:
+			case 4:for (; i < sh; i++)
+			{
+
+
+				if (y + (sh - 1) > 9) {
+					return false;
+				}
+				else if (y + (sh - 1) < 9 && y > 0 && x == 0) {
+					if (arr[x][y - 1] == boat || arr[x + 1][y - 1] == boat || arr[x + 1][y] == boat || arr[x + 1][y + i] == boat || arr[x][y + i] == boat || arr[x][y + (sh - 1) + 1] == boat || arr[x + 1][y + (sh - 1) + 1] == boat) {
+						return false;
+					}
+				}
+				else if (y + (sh - 1) < 9 && y > 0 && x == 9) {
+					if (arr[x][y - 1] == boat || arr[x - 1][y - 1] == boat || arr[x - 1][y] == boat || arr[x - 1][y + i] == boat || arr[x][y + i] == boat || arr[x][y + (sh - 1) + 1] == boat || arr[x - 1][y + (sh - 1) + 1] == boat) {
+						return false;
+					}
+				}
+				else if (y + (sh - 1) == 9 && x == 9) {
+					if (arr[x][y - 1] == boat || arr[x - 1][y - 1] == boat || arr[x - 1][y] == boat || arr[x - 1][y + i] == boat || arr[x][y + i] == boat) {
+						return false;
+					}
+				}
+				else if (y == 0 && x == 9) {
+					if (arr[x - 1][y] == boat || arr[x - 1][y + i] == boat || arr[x][y + i] == boat || arr[x][y + (sh - 1) + 1] == boat || arr[x - 1][y + (sh - 1) + 1] == boat) {
+						return false;
+					}
+				}
+				else if (y + (sh - 1) < 9 && x == 9) {
+					if (arr[x][y - 1] == boat || arr[x - 1][y - 1] == boat || arr[x - 1][y] == boat || arr[x - 1][y + i] == boat || arr[x][y + i] == boat || arr[x][y + (sh - 1) + 1] == boat || arr[x - 1][y + (sh - 1) + 1] == boat) {
+						return false;
+					}
+
+				}
+
+				else if (x == 0 && y == 0) {
+					if (arr[x + 1][y] == boat || arr[x + 1][y + i] == boat || arr[x][y + i] == boat || arr[x + 1][y + (sh - 1) + 1] == boat || arr[x][y + (sh - 1) + 1] == boat) {
+						return false;
+					}
+				}
+				else if (y + (sh - 1) == 9 && x == 0) {
+					if (arr[x][y - 1] == boat || arr[x + 1][y - 1] == boat || arr[x + 1][y] == boat || arr[x + 1][y + i] == boat || arr[x][y + i] == boat) {
+						return false;
+					}
+				}
+				else if (y + (sh - 1) == 9 && x < 9 && x > 0) {
+					if (arr[x][y - 1] == boat || arr[x + 1][y - 1] == boat || arr[x - 1][y - 1] == boat || arr[x][y + i] == boat || arr[x + 1][y + i] == boat || arr[x - 1][y + i] == boat || arr[x - 1][y] == boat || arr[x + 1][y] == boat) {
+						return false;
+					}
+				}
+				else if (y == 0 && x < 9 && x > 0) {
+					if (arr[x - 1][y] == boat || arr[x + 1][y] == boat || arr[x + 1][y + i] == boat || arr[x - 1][y + i] == boat || arr[x][y + i] == boat || arr[x + 1][y + (sh - 1) + 1] == boat || arr[x - 1][y + (sh - 1) + 1] == boat || arr[x][y + (sh - 1) + 1] == boat) {
+						return false;
+					}
+				}
+				else if (y > 0 && y + (sh - 1) < 9 && x < 9 && x >0) {
+					if (arr[x][y - 1] == boat || arr[x - 1][y - 1] == boat || arr[x + 1][y - 1] == boat || arr[x - 1][y] == boat || arr[x + 1][y] == boat || arr[x][y + i] == boat || arr[x + 1][y + i] == boat || arr[x - 1][y + i] == boat || arr[x][y + (sh - 1) + 1] == boat || arr[x - 1][y + (sh - 1) + 1] == boat || arr[x + 1][y + (sh - 1) + 1] == boat) {
+						return false;
+					}
+				}
+			}
+
+			}
+		}
+
+
+	}
+	else if (arr[x][y] == boat) {
+		return false;
+	}
+
+	return true;
+}
+bool initship(char arr[10][10], int x, int y, int size, int h) {
+	bool check = false;
+	if (h == 1) {
+		switch (size)
+		{
+		case 1: if (detect_ship(arr, x, y, size, h)) {
+			for (int i = 0; i < size; i++)
+			{
+				arr[x + i][y] = boat;
+			}
+			check = true;
+		}
+			  break;
+		case 2: if (detect_ship(arr, x, y, size, h)) {
+			for (int i = 0; i < size; i++)
+			{
+				arr[x + i][y] = boat;
+			}check = true;
+		}
+			  break;
+		case 3: if (detect_ship(arr, x, y, size, h)) {
+			for (int i = 0; i < size; i++)
+			{
+				arr[x + i][y] = boat;
+			}check = true;
+		}
+			  break;
+		case 4: if (detect_ship(arr, x, y, size, h)) {
+			for (int i = 0; i < size; i++)
+			{
+				arr[x + i][y] = boat;
+			}check = true;
+		}
+			  break;
+
+		}
+	}
+	else if (h == 2) {
+		switch (size)
+		{
+		case 1: if (detect_ship(arr, x, y, size, h))
+		{
+			for (int i = 0; i < size; i++)
+			{
+				arr[x][y + i] = boat;
+			}check = true;
+		}
+			  break;
+		case 2: if (detect_ship(arr, x, y, size, h)) {
+			for (int i = 0; i < size; i++)
+			{
+				arr[x][y + i] = boat;
+			}check = true;
+		}
+			  break;
+		case 3: if (detect_ship(arr, x, y, size, h)) {
+			for (int i = 0; i < size; i++)
+			{
+				arr[x][y + i] = boat;
+			}check = true;
+		}
+			  break;
+		case 4: if (detect_ship(arr, x, y, size, h)) {
+			for (int i = 0; i < size; i++)
+			{
+				arr[x][y + i] = boat;
+			}check = true;
+		}
+			  break;
+
+		}
+	}
+	return check;
+}
+
+void initarr(char arr[10][10]) {
+
+
+	for (size_t i = 0; i < setir; i++)
+	{
+
+		for (size_t j = 0; j < sutun; j++)
+		{
+			arr[i][j] = num;
+		}
+	}
+}
+
+void printarr(char arr[10][10], char arr1[10][10]) {
+	system("cls");
+	cout << "  ";
+	for (size_t i = 0; i < setir; i++)
+	{
+		cout << setir_num[i] << " ";
+	}
+
+	cout << "             ";
+	for (size_t i = 0; i < setir; i++)
+	{
+		cout << setir_num[i] << " ";
+	}
+
+	cout << endl;
+	for (size_t i = 0; i < setir; i++)
+	{
+
+		cout << sutun_num[i] << " ";
+		for (size_t j = 0; j < sutun; j++)
+		{
+			if (arr[i][j] == X) {
+				changeColor(Green);
+				cout << arr[i][j] << " ";
+				changeColor(White);
+			}
+			else if (arr[i][j] == O) {
+				changeColor(Red);
+				cout << arr[i][j] << " ";
+				changeColor(White);
+			}
+
+			else {
+				cout << arr[i][j] << " ";
+			}
+		}cout << "           ";
+
+		cout << sutun_num[i] << " ";
+		for (size_t j = 0; j < sutun; j++)
+		{
+			if (arr1[i][j] == X) {
+				changeColor(Green);
+				cout << arr1[i][j] << " ";
+				changeColor(White);
+			}
+			else if (arr1[i][j] == O) {
+				changeColor(Red);
+				cout << arr1[i][j] << " ";
+				changeColor(White);
+			}
+
+			else cout << arr1[i][j] << " ";
+
+		}cout << endl;
+
+
+	}
+	changeColor(Blue);
+	cout << endl << "\nUser ship : " << usership << "\t " << "Bot ship : " << botship << endl << endl;
+	changeColor(White);
+}
+
+void printarr3(char arr[10][10]) {
+	for (size_t i = 0; i < setir; i++)
+	{
+
+		for (size_t j = 0; j < sutun; j++)
+		{
+			cout << arr[i][j] << " ";
+		}cout << endl;
+	}
+}
+
+int c = 0;
+void randomarr(char arrr[10][10], int x, int y) {
+	int ships_count = 14;
+	int ship1_count = 5;
+	int ship2_count = 4;
+	int ship3_count = 3;
+	int ship4_count = 2;
+
+	int ship1_size = 1;
+	int ship2_size = 2;
+	int ship3_size = 3;
+	int ship4_size = 4;
+
+
+	while (ships_count > 0)
+	{
+
+		c++;
+		if (c > 1000) {
+
+			c = 0;
+			initarr(arrr);
+			ships_count = 14;
+			ship1_count = 5;
+			ship2_count = 4;
+			ship3_count = 3;
+			ship4_count = 2;
+		}
+
+		x = rand() % 10;
+		y = rand() % 10;
+		h = 1 + rand() % 2;
+		if (ship4_count > 0) {
+			if (initship(arrr, x, y, ship4_size, h)) {
+
+				ships_count--;
+				ship4_count--;
+			}
+		}
+		else if (ship3_count > 0) {
+			if (initship(arrr, x, y, ship3_size, h)) {
+
+				ships_count--;
+				ship3_count--;
+			}
+		}
+		else if (ship2_count > 0) {
+			if (initship(arrr, x, y, ship2_size, h)) {
+
+				ships_count--;
+				ship2_count--;
+			}
+		}
+		else if (ship1_count > 0) {
+			if (initship(arrr, x, y, ship1_size, h)) {
+
+				ships_count--;
+				ship1_count--;
+			}
+		}
+	}
+
+}
+bool detect_area(char arr[10][10], int x, int y) {
+
+	if (x == 0 && y == 0) {
+		if (arr[x + 1][y] == X || arr[x][y + 1] == X || arr[x + 1][y + 1] == X)
+			return true;
+		else return false;
+	}
+	else if (x == 9 && y == 0) {
+		if (arr[x - 1][y] == X || arr[x][y + 1] == X || arr[x - 1][y + 1] == X)
+			return true;
+		else return false;
+	}
+	else if (x == 0 && y == 9) {
+		if (arr[x + 1][y] == X || arr[x][y - 1] == X || arr[x + 1][y - 1] == X)
+			return true;
+		else return false;
+	}
+	else if (x == 9 && y == 9) {
+		if (arr[x - 1][y] == X || arr[x][y - 1] == X || arr[x - 1][y - 1] == X)
+			return true;
+		else return false;
+	}
+	else if (x >= 0 && x <= 9 && y >= 0 && y <= 9) {
+		if (x == 0) {
+			if (arr[x + 1][y] == X || arr[x][y - 1] == X || arr[x][y + 1] == X || arr[x + 1][y - 1] == X || arr[x + 1][y + 1] == X)
+				return true;
+			else return false;
+		}
+		else if (x == 9) {
+			if (arr[x - 1][y] == X || arr[x][y - 1] == X || arr[x][y + 1] == X || arr[x - 1][y - 1] == X || arr[x - 1][y + 1] == X)
+				return true;
+			else return false;
+		}
+		else if (y == 0) {
+			if (arr[x + 1][y] == X || arr[x][y + 1] == X || arr[x - 1][y] == X || arr[x + 1][y + 1] == X || arr[x - 1][y + 1] == X)
+				return true;
+			else return false;
+		}
+		else if (y == 9) {
+			if (arr[x + 1][y] == X || arr[x - 1][y] == X || arr[x][y - 1] == X || arr[x + 1][y - 1] == X || arr[x - 1][y - 1] == X)
+				return true;
+			else return false;
+		}
+		else {
+			if (arr[x + 1][y] == X || arr[x - 1][y] == X || arr[x][y + 1] == X || arr[x][y - 1] == X || arr[x][y + 1] == X || arr[x + 1][y + 1] == X || arr[x - 1][y - 1] == X || arr[x + 1][y - 1] == X || arr[x - 1][y + 1] == X)
+				return true;
+			else return false;
+		}
+
+	}
+
+}
+
+int size_s = 5;
+int i = 1;
+
+int ch = 1;
+int ch4 = 1;
+
+
+char bomb = 'r';
+int xy = 0;
+int dovr = 0;
+
+int ent = 0;
+
+int Count;
+char clever_bot(char arr[10][10], int x, int y) {
+	if (detect_area(arr, x, y) && dovr == 0) {
+		bomb = 'r';
+		return bomb;
+	}
+
+	if (arr[x][y] == boat) {
+		xy = 1;
+		bomb = 'x';
+		return bomb;
+	}
+	else if (arr[x][y] == num) {
+		xy = 1;
+		bomb = 'o';
+		return bomb;
+	}
+	else if (arr[x][y] == O) {
+		bomb = 'r';
+		return bomb;
+	}
+
+	else if (arr[x][y] == X) {
+		if (x >= 0 && x <= 9 && y >= 0 && y <= 9) {
+			if (x + 1 <= 9 && x - 1 >= 0 && y - 1 >= 0 && y + 1 <= 9) {
+				if (arr[x - 1][y] != boat && arr[x + 1][y] != boat && arr[x][y + 1] != boat && arr[x][y - 1] != boat && dovr == 0) {
+					ent = 1;
+					bomb = 'r';
+					usership--;
+					return bomb;
+
+				}
+			}
+			else if (x == 0 && y > 0 && y < 9) {
+				if (arr[x + 1][y] != boat && arr[x][y + 1] != boat && arr[x][y - 1] != boat && dovr == 0) {
+					ent = 1;
+					bomb = 'r';
+					usership--;
+					return bomb;
+				}
+			}
+			else if (x == 9 && y > 0 && y < 9) {
+				if (arr[x - 1][y] != boat && arr[x][y + 1] != boat && arr[x][y - 1] != boat && dovr == 0) {
+					ent = 1;
+					bomb = 'r';
+					usership--;
+					return bomb;
+				}
+			}
+			else if (y == 9 && x > 0 && x < 9) {
+				if (arr[x - 1][y] != boat && arr[x + 1][y] != boat && arr[x][y - 1] != boat && dovr == 0) {
+					ent = 1;
+					bomb = 'r';
+					usership--;
+					return bomb;
+				}
+			}
+			else if (y == 0 && x > 0 && x < 9) {
+				if (arr[x - 1][y] != boat && arr[x + 1][y] != boat && arr[x][y + 1] != boat && dovr == 0) {
+					ent = 1;
+					bomb = 'r';
+					usership--;
+					return bomb;
+				}
+			}
+			else if (x == 0 && y == 0) {
+				if (arr[x + 1][y] != boat && arr[x + 1][y + 1] != boat && arr[x][y + 1] != boat && dovr == 0) {
+					ent = 1;
+					bomb = 'r';
+					usership--;
+					return bomb;
+				}
+			}
+			else if (x == 9 && y == 0) {
+				if (arr[x - 1][y] != boat && arr[x - 1][y + 1] != boat && arr[x][y + 1] != boat && dovr == 0) {
+					ent = 1;
+					bomb = 'r';
+					usership--;
+					return bomb;
+				}
+			}
+			else if (x == 0 && y == 9) {
+				if (arr[x + 1][y] != boat && arr[x + 1][y - 1] != boat && arr[x][y - 1] != boat && dovr == 0) {
+					ent = 1;
+					bomb = 'r';
+					usership--;
+					return bomb;
+				}
+			}
+			else if (x == 9 && y == 9) {
+				if (arr[x - 1][y] != boat && arr[x - 1][y - 1] != boat && arr[x][y - 1] != boat && dovr == 0) {
+					ent = 1;
+					bomb = 'r';
+					usership--;
+					return bomb;
+				}
+			}
+
+			if (ent == 0) {
+				for (; i < size_s;)
+				{
+					if (ch4 == 1) {
+						if (x + i <= 9 && x - 1 >= 0) {
+							if (arr[x + i][y] == boat) {
+								bomb = 'x';
+								xy = 2;
+								dovr = 1;
+								return bomb;
+							}
+							else if (arr[x + i][y] != boat) {
+								if (dovr == 1) {
+									if (arr[x - 1][y] == boat) {
+										bomb = 'o';
+										xy = 2;
+										ch4 = 2;
+										return bomb;
+									}
+									else if (arr[x - 1][y] != boat) {
+										bomb = 'r';
+										usership--;
+										return bomb;
+									}
+								}
+								else if (dovr == 0) {
+									bomb = 'o';
+									xy = 2;
+									ch4 = 2;
+									return bomb;
+								}
+
+
+							}
+						}
+						else if (x - 1 < 0) {
+							if (arr[x + i][y] == boat) {
+								bomb = 'x';
+								dovr = 1;
+								xy = 2;
+								return bomb;
+							}
+							else if (arr[x + i][y] != boat) {
+								if (dovr == 0) {
+									bomb = 'o';
+									xy = 2;
+									ch4 = 3;
+									return bomb;
+								}
+								else if (dovr == 1) {
+									bomb = 'r';
+									usership--;
+									return bomb;
+								}
+							}
+						}
+						else if (x + 1 > 9) {
+
+							ch4 = 2;
+							bomb = 'q';
+							return bomb;
+						}
+						else if (x + i > 9) {
+							if (dovr == 1 && arr[x - 1][y] != boat) {
+								bomb = 'r';
+								usership--;
+								return bomb;
+							}
+
+							else {
+								ch4 = 2;
+								bomb = 'q';
+								return bomb;
+							}
+						}
+
+					}
+
+					else if (ch4 == 2) {
+						if (x + 1 <= 9 && x - i >= 0) {
+							if (arr[x - i][y] == boat) {
+								bomb = 'x';
+								xy = 4;
+								dovr = 1;
+								return bomb;
+							}
+							else if (arr[x - i][y] != boat) {
+								if (dovr == 1) {
+									usership--;
+									bomb = 'r';
+									return bomb;
+
+								}
+								else if (dovr == 0) {
+									bomb = 'o';
+									xy = 4;
+									ch4 = 3;
+									return bomb;
+								}
+
+
+							}
+						}
+						else if (x - i < 0) {
+							if (dovr == 1) {
+								bomb = 'r';
+								usership--;
+								return bomb;
+							}
+
+							else {
+								ch4 = 3;
+								bomb = 'q';
+								return bomb;
+							}
+						}
+						else if (x + 1 > 9) {
+							if (arr[x - i][y] == boat) {
+								bomb = 'x';
+								dovr = 1;
+								xy = 4;
+								return bomb;
+							}
+							else if (arr[x - i][y] != boat) {
+								if (dovr == 1) {
+									bomb = 'r';
+									usership--;
+									return bomb;
+								}
+								else if (dovr == 0) {
+									bomb = 'q';
+									ch4 = 3;
+									return bomb;
+								}
+							}
+
+
+
+						}
+					}
+					else if (ch4 == 3) {
+						if (y + i <= 9 && y - 1 >= 0) {
+							if (arr[x][y + i] == boat) {
+								bomb = 'x';
+								xy = 3;
+								dovr = 1;
+								return bomb;
+							}
+							else if (arr[x][y + i] != boat) {
+								if (dovr == 0) {
+									ch4 = 4;
+									xy = 3;
+									bomb = 'o';
+									return bomb;
+								}
+								else if (dovr == 1) {
+
+
+									if (arr[x][y - 1] == boat) {
+										bomb = 'o';
+										xy = 3;
+										ch4 = 4;
+										return bomb;
+									}
+									else if (arr[x][y - 1] != boat) {
+										bomb = 'r';
+										usership--;
+										return bomb;
+									}
+								}
+							}
+						}
+
+
+						else if (y - 1 < 0) {
+							if (arr[x][y + i] == boat) {
+								bomb = 'x';
+								dovr = 1;
+								xy = 3;
+								return bomb;
+							}
+							else if (arr[x + i][y] != boat) {
+								if (dovr == 0) {
+									bomb = 'o';
+									xy = 3;
+									ch4 = 4;
+									return bomb;
+								}
+								else if (dovr == 1) {
+									bomb = 'r';
+									usership--;
+									return bomb;
+								}
+							}
+						}
+						else if (y + 1 > 9) {
+							ch4 = 4;
+							bomb = 'q';
+							return bomb;
+						}
+						else if (y + i > 9 && arr[x][y - 1] != boat) {
+							if (dovr == 1) {
+								bomb = 'r';
+								usership--;
+								return bomb;
+							}
+							else {
+								ch4 = 4;
+								bomb = 'q';
+								return bomb;
+							}
+						}
+						else if (y + i > 9) {
+							ch4 = 4;
+							bomb = 'q';
+							return bomb;
+						}
+
+					}
+					else if (ch4 == 4) {
+						if (y + 1 <= 9 && y - i >= 0) {
+							if (arr[x][y - i] == boat) {
+								bomb = 'x';
+								xy = 5;
+								dovr = 1;
+								return bomb;
+							}
+							else if (arr[x][y - i] != boat) {
+								if (dovr == 1) {
+
+									bomb = 'r';
+									usership--;
+									return bomb;
+
+								}
+
+
+
+							}
+						}
+						else if (y + 1 > 9) {
+							if (arr[x][y - i] == boat) {
+								bomb = 'x';
+								xy = 5;
+								dovr = 1;
+								return bomb;
+							}
+							else if (arr[x][y - i] != boat) {
+								if (dovr == 1) {
+									bomb = 'r';
+									usership--;
+									return bomb;
+								}
+							}
+						}
+						else if (y - i < 0) {
+							if (dovr == 1) {
+								bomb = 'r';
+								usership--;
+								return bomb;
+							}
+
+
+
+
+						}
+
+
+
+
+					}
+				}
+				if (i == 4) {
+					bomb = 'r';
+					usership--;
+					return bomb;
+				}
+			}
+		}
+
+	}
+}
+
+
+
+
+int a;
+int b;
+int bots = 30;
+int mys = 30;
+char  boom = 'r';
+int mydovr = 0;
+
+
+char mybang(char arr[10][10], int a, int b) {
+
+
+	if (arr[a][b] == boat) {
+
+		boom = 'x';
+		mydovr = 1;
+		if (a == 0 && b == 0) {
+			if (arr[a + 1][b] != boat && arr[a][b + 1] != boat) {
+				botship--;
+			}
+		}
+		else if (a == 9 && b == 0) {
+			if (arr[a - 1][b] != boat && arr[a][b + 1] != boat) {
+				botship--;
+			}
+		}
+		else 	if (a == 0 && b == 9) {
+			if (arr[a + 1][b] != boat && arr[a][b - 1] != boat) {
+				botship--;
+			}
+		}
+		else 	if (a == 9 && b == 9) {
+			if (arr[a - 1][b] != boat && arr[a][b - 1] != boat) {
+				botship--;
+			}
+		}
+		else if (a == 0 && b > 0 && b < 9) {
+			if (arr[a + 1][b] != boat && arr[a][b - 1] != boat && arr[a][b + 1] != boat) {
+				botship--;
+			}
+		}
+		else if (a == 9 && b > 0 && b < 9) {
+			if (arr[a - 1][b] != boat && arr[a][b - 1] != boat && arr[a][b + 1] != boat) {
+				botship--;
+			}
+		}
+		else if (b == 0 && a > 0 && a < 9) {
+			if (arr[a][b + 1] != boat && arr[a + 1][b] != boat && arr[a - 1][b] != boat) {
+				botship--;
+			}
+		}
+		else if (b == 9 && a > 0 && a < 9) {
+			if (arr[a][b - 1] != boat && arr[a + 1][b] != boat && arr[a - 1][b] != boat) {
+				botship--;
+			}
+		}
+		else if ((b > 0 && b < 9) && (a > 0 && a < 9)) {
+			if (arr[a + 1][b] != boat && arr[a - 1][b] != boat && arr[a][b + 1] != boat && arr[a][b - 1] != boat) {
+				botship--;
+			}
+		}
+		return boom;
+	}
+
+
+	else if (arr[a][b] == num) {
+		boom = 'o';
+		return boom;
+	}
+	else if (arr[a][b] != boat || arr[a][b] != num) {
+		boom = 'p';
+		return boom;
+	}
+
+}
+int bts = botship;
+void bang_ship(char myarr[10][10], char botarr[10][10]) {
+	bool bangg = true;
+	while (bots > 0 && mys > 0)
+	{
+
+
+
+
+		while (bangg)
+		{
+			if (bts > botship) {
+				Count = 0;
+				bts = botship;
+			}
+			changeColor(Blue2);
+			cout << "user turn -> " << endl;
+			cout << "A - J : ";
+
+			cin >> a1;
+			if (a1 >= 97 && a1 <= 106)
+				a = int(a1) - 97;
+			else if (a1 >= 65 && a1 <= 74)
+				a = int(a1) - 65;
+			else {
+				cout << "wrong" << endl;
+				continue;
+			}
+			cout << "0 - 9 : ";
+			cin >> b;
+			if (b < 0 || b>9) {
+				cout << "wrong" << endl;
+				continue;
+			}
+			changeColor(White);
+			if (detect_area(botarr, a, b) && Count == 0) {
+				cout << "buraya vurmaq olmaz" << endl;
+				Sleep(1000);
+				continue;
+			}
+			mybang(botarr, a, b);
+
+			if (boom == 'x') {
+				Count = 1;
+				botarr[a][b] = X;
+				arr1[a][b] = X;
+
+				printarr(arr, arr1);
+				cout << endl;
+				//printarr3(arr3);
+				bangg = true;
+				bots--;
+			}
+
+			else if (boom == 'p') {
+				cout << "vurulmush yer";
+				Sleep(3000);
+				printarr(arr, arr1);
+				cout << endl;
+				//printarr3(arr3);
+				bangg = true;
+
+			}
+			else if (boom == 'o') {
+
+				botarr[a][b] = O;
+				arr1[a][b] = O;
+
+				printarr(arr, arr1);
+				cout << endl;
+				//printarr3(arr3);
+				bangg = false;
+			}
+		}
+
+
+
+		while (bangg == false) {
+			changeColor(Blue2);
+			cout << "bot turn : ";
+			changeColor(White);
+			if (bomb == 'r') {
+
+				x = rand() % 10;
+				y = rand() % 10;
+				i = 1;
+				dovr = 0;
+
+			}
+
+			clever_bot(myarr, x, y);
+			if (bomb == 'x') {
+
+				if (xy == 2) {
+					myarr[x + i][y] = X;
+					i++;
+				}
+				else if (xy == 4) {
+					myarr[x - i][y] = X;
+					i++;
+				}
+				else if (xy == 1) {
+					myarr[x][y] = X;
+				}
+				else if (xy == 3) {
+					myarr[x][y + i] = X;
+					i++;
+				}
+				else if (xy == 5) {
+
+					myarr[x][y - i] = X;
+					i++;
+
+				}
+				Sleep(1500);
+				mys--;
+				printarr(arr, arr1);
+				cout << endl;
+				//printarr3(arr3);
+
+				bangg = false;
+				Sleep(1000);
+			}
+
+
+			else if (bomb == 'o') {
+
+				if (xy == 2) {
+
+					myarr[x + i][y] = O;
+
+				}
+				else if (xy == 4) {
+
+					myarr[x - i][y] = O;
+
+				}
+				else if (xy == 1) {
+
+					myarr[x][y] = O;
+
+				}
+				else if (xy == 3) {
+
+					myarr[x][y + i] = O;
+
+				}
+				else if (xy == 5) {
+
+					myarr[x][y - i] = O;
+
+				}
+
+
+
+
+				i = 1;
+				Sleep(1500);
+				printarr(arr, arr1);
+				bangg = true;
+				cout << endl;
+				//printarr3(arr3);
+				Sleep(1000);
+
+			}
+			else if (bomb == 'q') {
+
+				i = 1;
+
+			}
+			if (bomb == 'r') {
+				bangg = false;
+
+
+
+
+
+				ent = 0;
+				ch = 1;
+				ch4 = 1;
+				printarr(arr, arr1);
+				cout << endl;
+				//printarr3(arr3);
+				Sleep(1500);
+			}
+
+		}
+	}
+
+
+}
+
+void printrule() {
+	changeColor(Blue2);
+	cout << "Battleship oyununa xosh gelmisiniz\n" << endl;
+	Sleep(2000);
+	cout << "Oyunda her iki terefin 14 gemisi var\n\n";
+	Sleep(2000);
+	cout << "Sira ile atesh edilir\n\n";
+	Sleep(2000);
+	cout << "Eger bot ve ya istifadechi reqibin gemisini vurarsa atesh sirasi yene onda olur\n\n";
+	Sleep(2000);
+	cout << "Kimin gemilerinin sayi 0 olsa  meglub olur " << endl;
+	changeColor(White);
+	system("pause");
+}
+
+char x1 = 0;
+int main() {
+	srand(time(0));
+	printrule();
+
+	int ships_count = 14;
+	int ship1_count = 5;
+	int ship2_count = 4;
+	int ship3_count = 3;
+	int ship4_count = 2;
+
+	initarr(arr);
+	initarr(arr1);
+	initarr(arr3);
+	printarr(arr, arr1);
+
+
+	int ch = 0;
+	while (true)
+	{
+
+
+		changeColor(Blue2);
+		cout << "1.Manual fill\n2.Random fill\nChoice : ";
+		cin >> ch;
+		if (ch == 1) {
+
+
+			int size = 0;
+
+			while (ships_count > 0)
+			{
+				cout << "size : ";
+
+				cin >> size;
+				if (size > 4 || size < 1) {
+					cout << "Bu sayda gemi yoxdur" << endl;
+					continue;
+				}
+				cout << "1.vertical\n2.horizontal : ";
+				cin >> h;
+				cout << "kordinat (A - J) : ";
+				cin >> x1;
+				if (x1 >= 97 && x1 <= 106)
+					x = int(x1) - 97;
+				else if (x1 >= 65 && x1 <= 74)
+					x = int(x1) - 65;
+				else {
+					cout << "wrong " << endl;
+					continue;
+				}
+
+
+				cout << "kordinat (0 - 9) : ";
+
+				cin >> y;
+
+
+				changeColor(White);
+				switch (size)
+				{
+				case 1: if (ship1_count > 0) {
+					initship(arr, x, y, size, h);
+					ship1_count--;
+					printarr(arr, arr1);
+
+				}
+					  else cout << "bu gemiden yoxdur" << endl;
+					Sleep(1000);
+					break;
+				case 2: if (ship2_count > 0) {
+					initship(arr, x, y, size, h);
+					ship2_count--;
+					printarr(arr, arr1);
+
+				}
+					  else cout << "bu gemiden yoxdur" << endl;
+					Sleep(1000);
+					break;
+				case 3: if (ship3_count > 0) {
+					initship(arr, x, y, size, h);
+					ship3_count--;
+					printarr(arr, arr1);
+
+				}
+					  else cout << "bu gemiden yoxdur" << endl;
+					Sleep(1000);
+					break;
+				case 4: if (ship4_count > 0) {
+					initship(arr, x, y, size, h);
+					ship4_count--;
+					printarr(arr, arr1);
+
+				}
+					  else cout << "bu gemiden yoxdur" << endl;
+					Sleep(1000);
+					break;
+
+				}
+
+
+			}
+
+
+		}
+
+		else if (ch == 2) {
+
+			randomarr(arr, x, y);
+			break;
+
+
+
+		}
+		else {
+			cout << "Bele secim yoxdur " << endl;
+			continue;
+		}
+	}
+	randomarr(arr3, x, y);
+
+	printarr(arr, arr1);
+	cout << endl;
+	/*printarr3(arr3);*/
+
+
+
+	bang_ship(arr, arr3);
+	if (bots == 0) {
+		cout << "you win" << endl;
+	}
+	else if (mys == 0) {
+		cout << "bot win" << endl;
+
+	}
+
+
+
+}
